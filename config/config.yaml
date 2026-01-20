@@ -25,7 +25,7 @@ aliases:
   # that have this panel_of_normals alias specified in the `alias` column, will
   # be used for the msisensor-pro baseline calculcation and the workflow will
   # then run in the tumor-only mode.
-  # panel_of_normals: panel_of_normals
+  panel_of_normals: panel_of_normals
 
 ref:
   # ensembl species name:
