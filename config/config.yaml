@@ -28,7 +28,6 @@ aliases:
   # samples.
   baseline: panel_of_normals
 
-
 ref:
   # ensembl species name:
   # This species needs to be available for download via the Ensembl FTP site.

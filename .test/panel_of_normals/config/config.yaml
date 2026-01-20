@@ -5,7 +5,6 @@ aliases:
   # normal: normal
   baseline: normal
 
-
 ref:
   species: homo_sapiens
   release: 114
