@@ -14,7 +14,7 @@ configfile: "config/config.yaml"
 include: "rules/common.smk"
 include: "rules/utils.smk"
 include: "rules/reference.smk"
-include: "rules/msisensor_pro_tumor_only.smk"
+include: "rules/msisensor_pro_panel_of_normals.smk"
 # include: "rules/msisensor_pro_tumor_normal.smk"
 include: "rules/results.smk"
 

@@ -40,6 +40,8 @@ rule create_baseline_samples_list:
         baseline_list="results/baselines/{genome_version}.baseline.samples.list",
     log:
         "logs/baselines/{genome_version}.baseline.samples.list.log",
+    conda:
+        "../envs/python.yaml"
     script:
         "../scripts/create_baseline_samples_list.py"
 
