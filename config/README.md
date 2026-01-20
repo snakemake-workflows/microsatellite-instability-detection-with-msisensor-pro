@@ -14,11 +14,11 @@ The workflow is built using [snakemake](https://snakemake.readthedocs.io/en/stab
 Setting up this workflow requires three steps:
 1. Create [a sample sheet as described below](#sample-sheet).
 2. Ensure that input SAM/BAM/CRAM files exist with the given file name pattern.
-3. Go through the `config/config.yaml` file adjusting all configurations as outlined in the extensive comments.
+3. Go through the `config/config.yaml` file adjusting all configurations as outlined in the extensive comments. This includes choosing, whether all the normal samples will be pooled into a baseline panel of normals, or whether each normal sample matches a tumor sample (with the same `group` specified).
 
 ### Sample sheet
 
-The sample sheet has the following layout:
+The sample sheet has the following layout and is agnostic of the analysis mode specified in the `config.yaml` (panel of normals vs. matched normals):
 
 | sample  | alias     | group     |
 | ------- | --------- | --------- |
