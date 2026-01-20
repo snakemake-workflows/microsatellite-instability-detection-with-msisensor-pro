@@ -26,7 +26,7 @@ aliases:
   # for the msisensor-pro baseline calculcation and the workflow will then run
   # in the tumor-only mode. They effectively represent a panel of normal
   # samples.
-  baseline: panel_of_normals
+  panel_of_normals: panel_of_normals
 
 ref:
   # ensembl species name:

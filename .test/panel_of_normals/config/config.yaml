@@ -3,7 +3,7 @@ sample_sheet: "config/samples.tsv"
 aliases:
   tumor: tumor
   # normal: normal
-  baseline: normal
+  panel_of_normals: normal
 
 ref:
   species: homo_sapiens

@@ -39,7 +39,7 @@ def get_final_output(wildcards):
     final_output = []
 
     matched_normal = lookup(within=config, dpath="aliases/matched_normal", default="")
-    panel_of_normals = lookup(within=config, dpath="aliases/baseline", default="")
+    panel_of_normals = lookup(within=config, dpath="aliases/panel_of_normals", default="")
 
     if matched_normal and panel_of_normals:
         raise KeyError(
