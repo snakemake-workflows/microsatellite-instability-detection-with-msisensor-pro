@@ -1,13 +1,13 @@
 ## Workflow overview
 
-This workflow is a best-practice workflow for microsatellite instability (MSI) detection with msisensor-pro, following best practices for standardized workflows.
+This workflow is a best-practice workflow for microsatellite instability (MSI) detection with [msisensor-pro](https://github.com/xjtu-omics/msisensor-pro), following best practices for standardized workflows.
 The workflow is built using [snakemake](https://snakemake.readthedocs.io/en/stable/) and consists of the following steps:
 
-1. Download genome reference from NCBI
-2. Validate downloaded genome (`python` script)
-3. Simulate short read sequencing data on the fly (`dwgsim`)
-4. Check quality of input read data (`FastQC`)
-5. Collect statistics from tool output (`MultiQC`)
+1. Download genome reference from Ensembl
+2. Run `msisensor-pro scan` of the reference genome.
+3. (optional) Create a panel of normals with `msisensor-pro baseline` as background for tumor MSI calling without matched normal samples.
+4. Run `msisensor-pro pro` for MSI calling.
+5. Collect MSI calling statistics in a single file across all samples.
 
 ## Workflow setup
 

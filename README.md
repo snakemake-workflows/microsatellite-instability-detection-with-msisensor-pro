@@ -5,7 +5,7 @@
 [![run with conda](http://img.shields.io/badge/run%20with-conda-3EB049?labelColor=000000&logo=anaconda)](https://docs.conda.io/en/latest/)
 [![workflow catalog](https://img.shields.io/badge/Snakemake%20workflow%20catalog-darkgreen)](https://snakemake.github.io/snakemake-workflow-catalog/docs/workflows/snakemake-workflows/microsatellite-instability-detection-with-msisensor-pro)
 
-A Snakemake workflow for microsatellite instability (MSI) detection with msisensor-pro, following best practices for standardized workflows.
+A Snakemake workflow for microsatellite instability (MSI) detection with [msisensor-pro](https://github.com/xjtu-omics/msisensor-pro), following best practices for standardized workflows.
 
 - [Snakemake workflow: `microsatellite-instability-detection-with-msisensor-pro`](#snakemake-workflow-name)
   - [Usage](#usage)
