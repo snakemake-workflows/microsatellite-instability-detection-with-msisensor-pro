@@ -47,7 +47,7 @@ jobs:
             with:
               directory: .test/panel_of_normals
               snakefile: .test/panel_of_normals/Snakefile
-              args: >
+              args: >-
                 --configfile .test/panel_of_normals/config/config.yaml
 
     name: Test ${{ matrix.case.name }}
@@ -57,6 +57,8 @@ jobs:
       - name: Test workflow
         uses: snakemake/snakemake-github-action@v2
         with:
+          directory: ${{ matrix.case.directory }}
+          snakefile: ${{ matrix.case.snakefile }}
           args: >
             --sdm conda
             --show-failed-logs
@@ -66,5 +68,7 @@ jobs:
       - name: Test report
         uses: snakemake/snakemake-github-action@v2
         with:
+          directory: ${{ matrix.case.directory }}
+          snakefile: ${{ matrix.case.snakefile }}
           args: >
             --report report.zip
