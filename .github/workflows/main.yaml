@@ -50,7 +50,6 @@ jobs:
               args: >
                 --configfile .test/panel_of_normals/config/config.yaml
 
-    
     name: Test ${{ matrix.case.name }}
     steps:
       - uses: actions/checkout@v4
