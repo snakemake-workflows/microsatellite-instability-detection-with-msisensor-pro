@@ -24,12 +24,15 @@ genome_name = f"genome.{datatype_genome}.{species}.{build}.{release}"
 
 # WILDCARD CONSTRAINTS
 
+
 wildcard_constraints:
     genome_version=genome_name,
     sample="|".join(samples["sample"]),
     workflow_mode="|".join(["tumor_only", "tumor_normal"]),
 
+
 # FINAL OUTPUT
+
 
 def get_final_output(wildcards):
 
@@ -65,6 +68,5 @@ def get_final_output(wildcards):
             "`aliases: baseline:`. You must specify exactly one of these. For "
             "details, see the comments in the configfile."
         )
-    
-    return final_output
 
+    return final_output

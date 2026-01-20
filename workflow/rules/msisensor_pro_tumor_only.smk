@@ -10,11 +10,11 @@ rule msisensor_pro_pro_preprocessing_baseline:
         ms_list="resources/{genome_version}.msisensor.scan.list",
         ref="resources/{genome_version}.fasta",
     output:
-        baseline="results/baselines/details/{baseline_sample}.{genome_version}.baseline.out"
+        baseline="results/baselines/details/{baseline_sample}.{genome_version}.baseline.out",
     log:
-        "logs/baselines/details/{baseline_sample}.{genome_version}.baseline.log"
+        "logs/baselines/details/{baseline_sample}.{genome_version}.baseline.log",
     conda:
-        "../envs/msisensor_pro.yaml",
+        "../envs/msisensor_pro.yaml"
     threads: 2
     shell:
         "( msisensor-pro pro "
@@ -37,9 +37,9 @@ rule create_baseline_samples_list:
             ),
         ),
     output:
-        baseline_list="results/baselines/{genome_version}.baseline.samples.list"
+        baseline_list="results/baselines/{genome_version}.baseline.samples.list",
     log:
-        "logs/baselines/{genome_version}.baseline.samples.list.log"
+        "logs/baselines/{genome_version}.baseline.samples.list.log",
     script:
         "../scripts/create_baseline_samples_list.py"
 
@@ -49,11 +49,11 @@ rule msisensor_pro_baseline:
         baseline_list="results/baselines/{genome_version}.baseline.samples.list",
         ms_list="resources/{genome_version}.msisensor.scan.list",
     output:
-        baseline="results/baselines/{genome_version}.baseline.tsv"
+        baseline="results/baselines/{genome_version}.baseline.tsv",
     log:
-        "logs/baselines/{genome_version}.baseline.log"
+        "logs/baselines/{genome_version}.baseline.log",
     conda:
-        "../envs/msisensor_pro.yaml",
+        "../envs/msisensor_pro.yaml"
     shell:
         "( msisensor-pro baseline "
         "    -d {input.ms_list} "
@@ -68,19 +68,19 @@ rule msisensor_pro_pro_run:
         baseline="results/baselines/{genome_version}.baseline.tsv",
         tumor_bam=expand(
             "results/recal/{sample}.bam",
-            sample=lookup(within=samples, query="group == '{group}'", cols="sample")
+            sample=lookup(within=samples, query="group == '{group}'", cols="sample"),
         ),
         tumor_bai=expand(
             "results/recal/{sample}.bai",
-            sample=lookup(within=samples, query="group == '{group}'", cols="sample")
+            sample=lookup(within=samples, query="group == '{group}'", cols="sample"),
         ),
         ref="resources/{genome_version}.fasta",
     output:
-        "results/tumor_only/{group}/{group}.{genome_version}.msisensor-pro"
+        "results/tumor_only/{group}/{group}.{genome_version}.msisensor-pro",
     log:
-        "results/tumor_only/{group}/{group}.{genome_version}.msisensor-pro.log"
+        "results/tumor_only/{group}/{group}.{genome_version}.msisensor-pro.log",
     conda:
-        "../envs/msisensor_pro.yaml",
+        "../envs/msisensor_pro.yaml"
     shell:
         "( msisensor-pro pro "
         "    -d {input.baseline} "

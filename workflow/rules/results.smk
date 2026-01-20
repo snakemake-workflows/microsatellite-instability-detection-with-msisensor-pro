@@ -2,6 +2,7 @@
 # aggregation and presentation of results               #
 # ----------------------------------------------------- #
 
+
 rule merge_msi_results:
     input:
         msi_results=expand(
@@ -11,12 +12,12 @@ rule merge_msi_results:
                 query="alias == '{tumor_alias}'",
                 cols="group",
                 tumor_alias=lookup(within=config, dpath="aliases/tumor"),
-            )
-        )
+            ),
+        ),
     output:
-        tsv="results/{workflow_mode}.{genome_version}.all_samples.tsv"
+        tsv="results/{workflow_mode}.{genome_version}.all_samples.tsv",
     log:
-        "logs/{workflow_mode}.{genome_version}.merge_all_samples.log"
+        "logs/{workflow_mode}.{genome_version}.merge_all_samples.log",
     conda:
         "../envs/tidyverse.yaml"
     script:

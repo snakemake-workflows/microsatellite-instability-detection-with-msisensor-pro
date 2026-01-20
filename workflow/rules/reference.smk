@@ -1,7 +1,7 @@
 rule download_genome:
     output:
         "resources/{genome_version}.fasta",
-    localrule: True # run on local machine
+    localrule: True  # run on local machine
     log:
         "logs/get-genome.{genome_version}.log",
     params:
@@ -20,9 +20,9 @@ rule msisensor_pro_scan:
     output:
         list="resources/{genome_version}.msisensor.scan.list",
     log:
-        "logs/{genome_version}.msisensor.scan.log"
+        "logs/{genome_version}.msisensor.scan.log",
     conda:
-        "../envs/msisensor_pro.yaml",
+        "../envs/msisensor_pro.yaml"
     shell:
         "( msisensor-pro scan "
         "    -d {input.fa} "
