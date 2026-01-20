@@ -5,14 +5,14 @@
 
 rule msisensor_pro_pro_preprocessing_baseline:
     input:
-        bam="results/recal/{baseline_sample}.bam",
-        bai="results/recal/{baseline_sample}.bai",
+        bam="results/recal/{panel_of_normals_sample}.bam",
+        bai="results/recal/{panel_of_normals_sample}.bai",
         ms_list="resources/{genome_version}.msisensor.scan.list",
         ref="resources/{genome_version}.fasta",
     output:
-        baseline="results/baselines/details/{baseline_sample}.{genome_version}.baseline.out",
+        panel_of_normals="results/panel_of_normals/details/{panel_of_normals_sample}.{genome_version}.panel_of_normals.out",
     log:
-        "logs/baselines/details/{baseline_sample}.{genome_version}.baseline.log",
+        "logs/panel_of_normals/details/{panel_of_normals_sample}.{genome_version}.panel_of_normals.log",
     conda:
         "../envs/msisensor_pro.yaml"
     threads: 2
@@ -21,53 +21,53 @@ rule msisensor_pro_pro_preprocessing_baseline:
         "    -d {input.ms_list} "
         "    -t {input.bam} "
         "    -g {input.ref} "
-        "    -o {output.baseline} "
+        "    -o {output.panel_of_normals} "
         ") > {log} 2>&1"
 
 
-rule create_baseline_samples_list:
+rule create_panel_of_normals_samples_list:
     input:
-        baseline=expand(
-            "results/baselines/details/{baseline_sample}.{{genome_version}}.baseline.out",
-            baseline_sample=lookup(
+        panel_of_normals=expand(
+            "results/panel_of_normals/details/{panel_of_normals_sample}.{{genome_version}}.panel_of_normals.out",
+            panel_of_normals_sample=lookup(
                 within=samples,
-                query="alias == '{baseline_alias}'",
+                query="alias == '{panel_of_normals_alias}'",
                 cols="sample",
-                baseline_alias=lookup(within=config, dpath="aliases/baseline"),
+                panel_of_normals_alias=lookup(within=config, dpath="aliases/baseline"),
             ),
         ),
     output:
-        baseline_list="results/baselines/{genome_version}.baseline.samples.list",
+        panel_of_normals_list="results/panel_of_normals/{genome_version}.panel_of_normals.samples.list",
     log:
-        "logs/baselines/{genome_version}.baseline.samples.list.log",
+        "logs/panel_of_normals/{genome_version}.panel_of_normals.samples.list.log",
     conda:
         "../envs/python.yaml"
     script:
-        "../scripts/create_baseline_samples_list.py"
+        "../scripts/create_panel_of_normals_samples_list.py"
 
 
 rule msisensor_pro_baseline:
     input:
-        baseline_list="results/baselines/{genome_version}.baseline.samples.list",
+        panel_of_normals_list="results/panel_of_normals/{genome_version}.panel_of_normals.samples.list",
         ms_list="resources/{genome_version}.msisensor.scan.list",
     output:
-        baseline="results/baselines/{genome_version}.baseline.tsv",
+        panel_of_normals="results/panel_of_normals/{genome_version}.panel_of_normals.tsv",
     log:
-        "logs/baselines/{genome_version}.baseline.log",
+        "logs/panel_of_normals/{genome_version}.panel_of_normals.log",
     conda:
         "../envs/msisensor_pro.yaml"
     shell:
         "( msisensor-pro baseline "
         "    -d {input.ms_list} "
-        "    -i {input.baseline_list} "
-        "    -o {output.baseline} "
+        "    -i {input.panel_of_normals_list} "
+        "    -o {output.panel_of_normals} "
         "    -s 1 "
         ") > {log} 2>&1"
 
 
 rule msisensor_pro_pro_run:
     input:
-        baseline="results/baselines/{genome_version}.baseline.tsv",
+        panel_of_normals="results/panel_of_normals/{genome_version}.panel_of_normals.tsv",
         tumor_bam=expand(
             "results/recal/{sample}.bam",
             sample=lookup(within=samples, query="group == '{group}'", cols="sample"),
@@ -78,14 +78,14 @@ rule msisensor_pro_pro_run:
         ),
         ref="resources/{genome_version}.fasta",
     output:
-        "results/tumor_only/{group}/{group}.{genome_version}.msisensor-pro",
+        "results/tumor_panel_of_normals/{group}/{group}.{genome_version}.msisensor-pro",
     log:
-        "results/tumor_only/{group}/{group}.{genome_version}.msisensor-pro.log",
+        "results/tumor_panel_of_normals/{group}/{group}.{genome_version}.msisensor-pro.log",
     conda:
         "../envs/msisensor_pro.yaml"
     shell:
         "( msisensor-pro pro "
-        "    -d {input.baseline} "
+        "    -d {input.panel_of_normals} "
         "    -t {input.tumor_bam} "
         "    -g {input.ref} "
         "    -o {output} "

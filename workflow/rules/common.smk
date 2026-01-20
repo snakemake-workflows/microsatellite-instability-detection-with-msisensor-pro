@@ -28,7 +28,7 @@ genome_name = f"genome.{datatype_genome}.{species}.{build}.{release}"
 wildcard_constraints:
     genome_version=genome_name,
     sample="|".join(samples["sample"]),
-    workflow_mode="|".join(["tumor_only", "tumor_normal"]),
+    workflow_mode="|".join(["tumor_panel_of_normals", "tumor_matched_normal"]),
 
 
 # FINAL OUTPUT
@@ -51,14 +51,14 @@ def get_final_output(wildcards):
     elif matched_normal:
         final_output.extend(
             expand(
-                "results/tumor_normal.{genome_version}.all_samples.tsv",
+                "results/tumor_matched_normal.{genome_version}.all_samples.tsv",
                 genome_version=genome_name,
             ),
         )
     elif panel_of_normals:
         final_output.extend(
             expand(
-                "results/tumor_only.{genome_version}.all_samples.tsv",
+                "results/tumor_panel_of_normals.{genome_version}.all_samples.tsv",
                 genome_version=genome_name,
             ),
         )
