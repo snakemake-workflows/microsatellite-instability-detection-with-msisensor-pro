@@ -12,8 +12,8 @@ samples = (
 
 
 # validate sample sheet and config file
-validate(samples, schema="../../config/schemas/samples.schema.yaml")
-validate(config, schema="../../config/schemas/config.schema.yaml")
+validate(samples, schema="../schemas/samples.schema.yaml")
+validate(config, schema="../schemas/config.schema.yaml")
 
 # define the genome variable to have informative fasta file name
 datatype_genome = "dna"
