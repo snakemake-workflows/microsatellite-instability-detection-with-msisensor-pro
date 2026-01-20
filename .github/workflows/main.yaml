@@ -38,19 +38,34 @@ jobs:
     needs:
       - Linting
       - Formatting
+    strategy:
+      fail-fast: true
+      matrix:
+        case:
+          - name: panel of normals
+            uses: snakemake/snakemake-github-action@v2
+            with:
+              directory: .test/panel_of_normals
+              snakefile: .test/panel_of_normals/Snakefile
+              args: >
+                --configfile .test/panel_of_normals/config/config.yaml
+
+    
+    name: Test ${{ matrix.case.name }}
     steps:
       - uses: actions/checkout@v4
 
-      - name: Test panel_of_normals workflow
+      - name: Test workflow
         uses: snakemake/snakemake-github-action@v2
         with:
-          directory: .test/panel_of_normals
-          snakefile: .test/panel_of_normals/Snakefile
-          args: "--sdm conda --show-failed-logs --cores 2 --conda-cleanup-pkgs cache"
+          args: >
+            --sdm conda
+            --show-failed-logs
+            --cores 2
+            --conda-cleanup-pkgs cache
 
       - name: Test report
         uses: snakemake/snakemake-github-action@v2
         with:
-          directory: .test/panel_of_normals
-          snakefile: .test/panel_of_normals/Snakefile
-          args: "--report report.zip"
+          args: >
+            --report report.zip
