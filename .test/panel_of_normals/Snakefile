@@ -1,5 +1,6 @@
 configfile: "config/config.yaml"
 
+
 # declare main workflow as a module
 module test_msisensor_workflow:
     snakefile:
@@ -11,7 +12,9 @@ module test_msisensor_workflow:
 # use all rules from the main workflow
 use rule * from test_msisensor_workflow exclude download_genome
 
+
 # testing output
+
 
 rule testing_all:
     input:
@@ -21,17 +24,18 @@ rule testing_all:
 
 # add functions for testing setup rules (below)
 
+
 def get_entry(wildcards, entry):
     return lookup(
-            within=test_msisensor_workflow.samples,
-            query="sample == '{wildcards.sample}'",
-            cols=entry,
-        )
+        within=test_msisensor_workflow.samples,
+        query="sample == '{wildcards.sample}'",
+        cols=entry,
+    )
+
 
 def get_folder(wildcards):
     alias = test_msisensor_workflow.samples.loc[
-        test_msisensor_workflow.samples["sample"] == wildcards.sample,
-        "alias"
+        test_msisensor_workflow.samples["sample"] == wildcards.sample, "alias"
     ].squeeze()
     if alias == "normal":
         return "data4baseline"
@@ -40,7 +44,9 @@ def get_folder(wildcards):
     else:
         raise ValueError(f"Unexpected alias in test samples.tsv file: {alias}.")
 
+
 # add rules for testing setup
+
 
 rule download_test_data:
     output:
