@@ -2,7 +2,7 @@ sample_sheet: "config/samples.tsv"
 
 aliases:
   tumor: tumor
-  # normal: normal
+  # matched_normal: normal
   panel_of_normals: normal
 
 ref:
