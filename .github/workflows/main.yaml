@@ -45,7 +45,7 @@ jobs:
           - name: panel of normals
             directory: .test/panel_of_normals
             snakefile: .test/panel_of_normals/Snakefile
-            args: >-
+            args: >
               --configfile .test/panel_of_normals/config/config.yaml
 
     name: Test ${{ matrix.case.name }}
@@ -62,6 +62,7 @@ jobs:
             --show-failed-logs
             --cores 2
             --conda-cleanup-pkgs cache
+            ${{ matrix.case.args }}
 
       - name: Test report
         uses: snakemake/snakemake-github-action@v2
@@ -70,3 +71,4 @@ jobs:
           snakefile: ${{ matrix.case.snakefile }}
           args: >
             --report report.zip
+            ${{ matrix.case.args }}
