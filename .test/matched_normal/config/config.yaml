@@ -1,0 +1,11 @@
+sample_sheet: "config/samples.tsv"
+
+aliases:
+  tumor: tumor
+  matched_normal: normal
+  # panel_of_normals: normal
+
+ref:
+  species: homo_sapiens
+  release: 114
+  build: GRCh38

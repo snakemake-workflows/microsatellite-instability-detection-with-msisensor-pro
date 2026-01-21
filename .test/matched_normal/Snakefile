@@ -1,0 +1,63 @@
+configfile: "config/config.yaml"
+
+
+# declare main workflow as a module
+module test_msisensor_workflow:
+    snakefile:
+        "../../workflow/Snakefile"
+    config:
+        config
+
+
+# use all rules from the main workflow
+use rule * from test_msisensor_workflow exclude download_genome
+
+
+# testing output
+
+
+rule testing_all:
+    input:
+        rules.all.input,
+    default_target: True
+
+
+# add functions for testing setup rules (below)
+
+
+def get_entry(wildcards, entry):
+    return lookup(
+        within=test_msisensor_workflow.samples,
+        query="sample == '{wildcards.sample}'",
+        cols=entry,
+    )
+
+
+# add rules for testing setup
+
+
+rule download_test_data:
+    output:
+        bam="results/recal/{sample}.bam",
+    log:
+        "logs/data_download/{sample}.download.log",
+    params:
+        alias=lambda wc: get_entry(wc, "alias"),
+    shell:
+        "( wget https://github.com/xjtu-omics/msisensor-pro/raw/refs/tags/v1.3.0/demo/data_input/data4test/test_{params.alias}_sorted.bam; "
+        "  mv test_{params.alias}_sorted.bam {output.bam} "
+        ") > {log} 2>&1"
+
+
+rule download_test_reference:
+    output:
+        ref=expand(
+            "resources/{genome_version}.fasta",
+            genome_version=test_msisensor_workflow.genome_name,
+        ),
+    log:
+        "logs/download_test_reference.log",
+    shell:
+        "( wget https://github.com/xjtu-omics/msisensor-pro/raw/refs/tags/v1.3.0/demo/data_input/reference/reference.fa; "
+        " mv reference.fa {output.ref} "
+        ") > {log} 2>&1"

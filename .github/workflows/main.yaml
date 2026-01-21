@@ -47,6 +47,13 @@ jobs:
             snakefile: .test/panel_of_normals/Snakefile
             args: >
               --configfile .test/panel_of_normals/config/config.yaml
+        case:
+          - name: matched normal
+            directory: .test/matched_normal
+            snakefile: .test/matched_normal/Snakefile
+            args: >
+              --configfile .test/matched_normal/config/config.yaml
+
 
     name: Test ${{ matrix.case.name }}
     steps:
