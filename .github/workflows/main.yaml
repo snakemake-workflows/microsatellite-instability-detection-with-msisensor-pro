@@ -43,11 +43,10 @@ jobs:
       matrix:
         case:
           - name: panel of normals
-            with:
-              directory: .test/panel_of_normals
-              snakefile: .test/panel_of_normals/Snakefile
-              args: >-
-                --configfile .test/panel_of_normals/config/config.yaml
+            directory: .test/panel_of_normals
+            snakefile: .test/panel_of_normals/Snakefile
+            args: >-
+              --configfile .test/panel_of_normals/config/config.yaml
 
     name: Test ${{ matrix.case.name }}
     steps:
