@@ -1,5 +1,22 @@
 # Changelog
 
+## 1.0.0 (2026-01-21)
+
+
+### Features
+
+* initial working version for tumor_only (with a baseline panel of normal samples), runs with msisensor-pro demo data ([2ed510a](https://github.com/snakemake-workflows/microsatellite-instability-detection-with-msisensor-pro/commit/2ed510acabc411ed708cabed1cd599f3c209da39))
+
+
+### Bug Fixes
+
+* add python conda env to satisfy linter, rename to panel_of_normals for more descriptive naming ([e7b2d37](https://github.com/snakemake-workflows/microsatellite-instability-detection-with-msisensor-pro/commit/e7b2d370dc7f512b5a227d8d077a145bf5f8d9bf))
+* consistently rename to panel_of_normals (instead of baseline) and matched_normal (instead of just normal) ([5a53556](https://github.com/snakemake-workflows/microsatellite-instability-detection-with-msisensor-pro/commit/5a535564e6e6f36e429cc5d25467d93b29a79c09))
+* missing replacement of baseline ([c8c79d4](https://github.com/snakemake-workflows/microsatellite-instability-detection-with-msisensor-pro/commit/c8c79d49d12c26cd0095c5116ea47f38c5daf04c))
+* move schemas to workflow/ directory ([52dcb9c](https://github.com/snakemake-workflows/microsatellite-instability-detection-with-msisensor-pro/commit/52dcb9cbdacb2b799d484b0eba52d7bc3c165fad))
+* rename script according to refactoring ([923279e](https://github.com/snakemake-workflows/microsatellite-instability-detection-with-msisensor-pro/commit/923279eec443f9a440eb37f84ed53d8f66036442))
+* switch to panel_of_normals instead of baseline in alias config, as well ([895146c](https://github.com/snakemake-workflows/microsatellite-instability-detection-with-msisensor-pro/commit/895146c581207e8b16b30d18b6926ebb5a24e317))
+
 ## [1.1.0](https://github.com/snakemake-workflows/snakemake-workflow-template/compare/v1.0.0...v1.1.0) (2025-07-29)
 
 
