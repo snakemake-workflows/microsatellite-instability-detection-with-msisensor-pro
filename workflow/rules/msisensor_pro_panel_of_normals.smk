@@ -72,11 +72,21 @@ rule msisensor_pro_pro_run:
         panel_of_normals="results/panel_of_normals/{genome_version}.panel_of_normals.tsv",
         tumor_bam=expand(
             "results/recal/{sample}.bam",
-            sample=lookup(within=samples, query="group == '{group}'", cols="sample"),
+            sample=lookup(
+                within=samples,
+                query="group == '{group}' & alias == '{alias}'",
+                cols="sample",
+                alias=lookup(within=config, dpath="aliases/tumor"),
+            ),
         ),
         tumor_bai=expand(
             "results/recal/{sample}.bai",
-            sample=lookup(within=samples, query="group == '{group}'", cols="sample"),
+            sample=lookup(
+                within=samples,
+                query="group == '{group}' & alias == '{alias}'",
+                cols="sample",
+                alias=lookup(within=config, dpath="aliases/tumor"),
+            ),
         ),
         ref="resources/{genome_version}.fasta",
     output:
