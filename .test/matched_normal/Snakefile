@@ -15,26 +15,13 @@ use rule * from test_msisensor_workflow exclude download_genome
 
 # testing output
 
-
 rule testing_all:
     input:
         rules.all.input,
     default_target: True
 
 
-# add functions for testing setup rules (below)
-
-
-def get_entry(wildcards, entry):
-    return lookup(
-        within=test_msisensor_workflow.samples,
-        query="sample == '{wildcards.sample}'",
-        cols=entry,
-    )
-
-
 # add rules for testing setup
-
 
 rule download_test_data:
     output:
@@ -42,7 +29,11 @@ rule download_test_data:
     log:
         "logs/data_download/{sample}.download.log",
     params:
-        alias=lambda wc: get_entry(wc, "alias"),
+        alias=lookup(
+            within=test_msisensor_workflow.samples,
+            query="sample == '{wildcards.sample}'",
+            cols="alias",
+        ),
     shell:
         "( wget https://github.com/xjtu-omics/msisensor-pro/raw/refs/tags/v1.3.0/demo/data_input/data4test/test_{params.alias}_sorted.bam; "
         "  mv test_{params.alias}_sorted.bam {output.bam} "
