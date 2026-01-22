@@ -11,9 +11,25 @@ samples = (
 )
 
 
-# validate sample sheet and config file
+# validate sample sheet
 validate(samples, schema="../schemas/samples.schema.yaml")
+
+# uniqueness validation for (group, alias) pairs
+duplicates = samples.groupby(['group', 'alias']).size()
+duplicate_pairs = duplicates[duplicates > 1]
+if not duplicate_pairs.empty:
+    raise ValueError(
+        "The sample sheet contains multiple samples with the same (group, "
+        "alias) pair(s). Each (group, alias) combination must map to exactly "
+        "one sample, or, put differently each alias should only appear once per
+        "group. "
+        f"The duplicates found were:\n{duplicate_pairs}"
+    )
+
+
+# validate config file
 validate(config, schema="../schemas/config.schema.yaml")
+
 
 # define the genome variable to have informative fasta file name
 datatype_genome = "dna"
