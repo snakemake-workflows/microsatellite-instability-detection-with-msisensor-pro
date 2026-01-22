@@ -34,7 +34,7 @@ rule create_panel_of_normals_samples_list:
                 query="alias == '{panel_of_normals_alias}'",
                 cols="sample",
                 panel_of_normals_alias=lookup(
-                    within=config, dpath="aliases/panel_of_normals"
+                    within=config, dpath="aliases/panel_of_normals", default=""
                 ),
             ),
         ),

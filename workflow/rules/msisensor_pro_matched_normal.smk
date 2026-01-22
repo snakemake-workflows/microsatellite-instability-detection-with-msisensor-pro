@@ -12,7 +12,9 @@ rule msisensor_pro_msi:
                 within=samples,
                 query="group == '{group}' & alias == '{alias}'",
                 cols="sample",
-                alias=lookup(within=config, dpath="aliases/matched_normal"),
+                alias=lookup(
+                    within=config, dpath="aliases/matched_normal", default=""
+                ),
             ),
         ),
         normal_bai=expand(
@@ -21,7 +23,9 @@ rule msisensor_pro_msi:
                 within=samples,
                 query="group == '{group}' & alias == '{alias}'",
                 cols="sample",
-                alias=lookup(within=config, dpath="aliases/matched_normal"),
+                alias=lookup(
+                    within=config, dpath="aliases/matched_normal", default=""
+                ),
             ),
         ),
         tumor_bam=expand(
