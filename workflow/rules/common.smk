@@ -89,3 +89,23 @@ def get_final_output(wildcards):
         )
 
     return final_output
+
+
+# helper functions
+
+def get_sample_file_for_group_and_alias_type(wildcards, alias_type, extension):
+    alias = config["aliases"].get(alias_type, "")
+    if not alias:
+        ValueError(
+            f"No alias for sample type '{alias_type}' specified under config['aliases']."
+        )
+    sample = lookup(
+        within=samples,
+        cols="sample",
+        query=f"group == '{wildcards.group}' & alias == '{alias}'",
+    )
+    return expand(
+        "results/recal/{sample}.{extension}",
+        sample=sample,
+        extension=extension,
+    )

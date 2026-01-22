@@ -6,49 +6,21 @@
 rule msisensor_pro_msi:
     input:
         ms_list="resources/{genome_version}.msisensor.scan.list",
-        normal_bam=expand(
-            "results/recal/{sample}.bam",
-            sample=lookup(
-                within=samples,
-                query="group == '{group}' & alias == '{alias}'",
-                cols="sample",
-                alias=lookup(
-                    within=config, dpath="aliases/matched_normal", default=""
-                ),
-            ),
+        normal_bam=lambda wc: get_sample_file_for_group_and_alias_type(
+            wc, alias_type="matched_normal", extension="bam"
         ),
-        normal_bai=expand(
-            "results/recal/{sample}.bai",
-            sample=lookup(
-                within=samples,
-                query="group == '{group}' & alias == '{alias}'",
-                cols="sample",
-                alias=lookup(
-                    within=config, dpath="aliases/matched_normal", default=""
-                ),
-            ),
+        normal_bai=lambda wc: get_sample_file_for_group_and_alias_type(
+            wc, alias_type="matched_normal", extension="bai"
         ),
-        tumor_bam=expand(
-            "results/recal/{sample}.bam",
-            sample=lookup(
-                within=samples,
-                query="group == '{group}' & alias == '{alias}'",
-                cols="sample",
-                alias=lookup(within=config, dpath="aliases/tumor"),
-            ),
+        tumor_bam=lambda wc: get_sample_file_for_group_and_alias_type(
+            wc, alias_type="tumor", extension="bam"
         ),
-        tumor_bai=expand(
-            "results/recal/{sample}.bai",
-            sample=lookup(
-                within=samples,
-                query="group == '{group}' & alias == '{alias}'",
-                cols="sample",
-                alias=lookup(within=config, dpath="aliases/tumor"),
-            ),
+        tumor_bai=lambda wc: get_sample_file_for_group_and_alias_type(
+            wc, alias_type="tumor", extension="bai"
         ),
         ref="resources/{genome_version}.fasta",
     output:
-        "results/tumor_matched_normal/{group}/{group}.{genome_version}.msisensor-pro",
+        msi="results/tumor_matched_normal/{group}/{group}.{genome_version}.msisensor-pro",
     log:
         "results/tumor_matched_normal/{group}/{group}.{genome_version}.msisensor-pro.log",
     conda:
@@ -56,8 +28,8 @@ rule msisensor_pro_msi:
     shell:
         "( msisensor-pro msi "
         "    -d {input.ms_list} "
-        "    -n {input.normal_bam} "
-        "    -t {input.tumor_bam} "
+        "    -n {input.normal_bam[0]} "
+        "    -t {input.tumor_bam[0]} "
         "    -g {input.ref} "
-        "    -o {output} "
+        "    -o {output.msi} "
         ") > {log} 2>&1"
