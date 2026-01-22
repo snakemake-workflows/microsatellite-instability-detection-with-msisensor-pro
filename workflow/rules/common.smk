@@ -44,6 +44,7 @@ genome_name = f"genome.{datatype_genome}.{species}.{build}.{release}"
 wildcard_constraints:
     genome_version=genome_name,
     sample="|".join(samples["sample"]),
+    group="|".join(samples["group"]),
     workflow_mode="|".join(["tumor_panel_of_normals", "tumor_matched_normal"]),
 
 
