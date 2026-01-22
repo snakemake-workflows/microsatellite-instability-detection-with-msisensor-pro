@@ -93,6 +93,7 @@ def get_final_output(wildcards):
 
 # helper functions
 
+
 def get_sample_file_for_group_and_alias_type(wildcards, alias_type, extension):
     alias = config["aliases"].get(alias_type, "")
     if not alias:
