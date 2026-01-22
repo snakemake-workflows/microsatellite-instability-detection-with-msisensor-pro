@@ -21,7 +21,7 @@ if not duplicate_pairs.empty:
     raise ValueError(
         "The sample sheet contains multiple samples with the same (group, "
         "alias) pair(s). Each (group, alias) combination must map to exactly "
-        "one sample, or, put differently each alias should only appear once per ""
+        "one sample, or, put differently each alias should only appear once per "
         "group. "
         f"The duplicates found were:\n{duplicate_pairs}"
     )
