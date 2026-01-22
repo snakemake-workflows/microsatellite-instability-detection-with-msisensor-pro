@@ -15,7 +15,7 @@ samples = (
 validate(samples, schema="../schemas/samples.schema.yaml")
 
 # uniqueness validation for (group, alias) pairs
-duplicates = samples.groupby(['group', 'alias']).size()
+duplicates = samples.groupby(["group", "alias"]).size()
 duplicate_pairs = duplicates[duplicates > 1]
 if not duplicate_pairs.empty:
     raise ValueError(
