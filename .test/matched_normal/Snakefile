@@ -15,6 +15,7 @@ use rule * from test_msisensor_workflow exclude download_genome
 
 # testing output
 
+
 rule testing_all:
     input:
         rules.all.input,
@@ -22,6 +23,7 @@ rule testing_all:
 
 
 # add rules for testing setup
+
 
 rule download_test_data:
     output:
