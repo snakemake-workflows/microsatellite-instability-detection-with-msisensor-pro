@@ -1,5 +1,30 @@
 # Changelog
 
+## [1.1.0](https://github.com/snakemake-workflows/microsatellite-instability-detection-with-msisensor-pro/compare/v1.0.0...v1.1.0) (2026-01-23)
+
+
+### Features
+
+* add tumor_matched_normal mode, matched normal samples for each patient ([c451ab6](https://github.com/snakemake-workflows/microsatellite-instability-detection-with-msisensor-pro/commit/c451ab6cd375cf3541604e4279f9c276c9b3063a))
+* add tumor_normal calling with matched normal samples (one normal sample per tumor sample) ([be2166d](https://github.com/snakemake-workflows/microsatellite-instability-detection-with-msisensor-pro/commit/be2166db9a98efb3fa910e1c63ffece67fc83a6b))
+
+
+### Bug Fixes
+
+* actually load the new smk file :facepalm: ([f5d1e77](https://github.com/snakemake-workflows/microsatellite-instability-detection-with-msisensor-pro/commit/f5d1e77a7aa7c2317a55d22df43e4afd09ce5b54))
+* check for duplicate group-alias pairs in samples.tsv, to avoid cryptic errors ([9b509f4](https://github.com/snakemake-workflows/microsatellite-instability-detection-with-msisensor-pro/commit/9b509f461930f405f5fe156ba58e4631bc3d0fd7))
+* clean up rule readability with input function ([3058ce6](https://github.com/snakemake-workflows/microsatellite-instability-detection-with-msisensor-pro/commit/3058ce6c37d9a8c60902fa8d4adf2efd13eb1ac9))
+* ensure correct sample is chosen for panel_of_normals mode, by also looking at alias ([24de323](https://github.com/snakemake-workflows/microsatellite-instability-detection-with-msisensor-pro/commit/24de32351085fed395eb132ecf526563ca6e5931))
+* extra quote removed ([aeb43cc](https://github.com/snakemake-workflows/microsatellite-instability-detection-with-msisensor-pro/commit/aeb43cc8ff2aaf4f0392d9176705056a628c1346))
+* missing closing quotes ([4a8f1fe](https://github.com/snakemake-workflows/microsatellite-instability-detection-with-msisensor-pro/commit/4a8f1fe9d1dcab06e107b5eabb08d2964eff1296))
+* provide empty defaults for config alias lookups of normal samples ([7a408c8](https://github.com/snakemake-workflows/microsatellite-instability-detection-with-msisensor-pro/commit/7a408c8ac3316b02173b4b82975e273a4f72119b))
+* syntax ([ba3bf72](https://github.com/snakemake-workflows/microsatellite-instability-detection-with-msisensor-pro/commit/ba3bf72957038e8fa2b3a3d3ba42b40e54e7946e))
+
+
+### Performance Improvements
+
+* constrain group wildcard ([2be774a](https://github.com/snakemake-workflows/microsatellite-instability-detection-with-msisensor-pro/commit/2be774abe737e293db12f9cd8a8b5a8805a0ca2f))
+
 ## 1.0.0 (2026-01-21)
 
 
