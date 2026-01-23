@@ -34,7 +34,7 @@ rule create_panel_of_normals_samples_list:
                 query="alias == '{panel_of_normals_alias}'",
                 cols="sample",
                 panel_of_normals_alias=lookup(
-                    within=config, dpath="aliases/panel_of_normals"
+                    within=config, dpath="aliases/panel_of_normals", default=""
                 ),
             ),
         ),
@@ -70,13 +70,11 @@ rule msisensor_pro_baseline:
 rule msisensor_pro_pro_run:
     input:
         panel_of_normals="results/panel_of_normals/{genome_version}.panel_of_normals.tsv",
-        tumor_bam=expand(
-            "results/recal/{sample}.bam",
-            sample=lookup(within=samples, query="group == '{group}'", cols="sample"),
+        tumor_bam=lambda wc: get_sample_file_for_group_and_alias_type(
+            wc, alias_type="tumor", extension="bam"
         ),
-        tumor_bai=expand(
-            "results/recal/{sample}.bai",
-            sample=lookup(within=samples, query="group == '{group}'", cols="sample"),
+        tumor_bai=lambda wc: get_sample_file_for_group_and_alias_type(
+            wc, alias_type="tumor", extension="bai"
         ),
         ref="resources/{genome_version}.fasta",
     output:

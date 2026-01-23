@@ -22,29 +22,6 @@ rule testing_all:
     default_target: True
 
 
-# add functions for testing setup rules (below)
-
-
-def get_entry(wildcards, entry):
-    return lookup(
-        within=test_msisensor_workflow.samples,
-        query="sample == '{wildcards.sample}'",
-        cols=entry,
-    )
-
-
-def get_folder(wildcards):
-    alias = test_msisensor_workflow.samples.loc[
-        test_msisensor_workflow.samples["sample"] == wildcards.sample, "alias"
-    ].squeeze()
-    if alias == "normal":
-        return "data4baseline"
-    elif alias == "tumor":
-        return "data4test"
-    else:
-        raise ValueError(f"Unexpected alias in test samples.tsv file: {alias}.")
-
-
 # add rules for testing setup
 
 
@@ -54,12 +31,14 @@ rule download_test_data:
     log:
         "logs/data_download/{sample}.download.log",
     params:
-        group=lambda wc: get_entry(wc, "group"),
-        alias=lambda wc: get_entry(wc, "alias"),
-        folder=lambda wc: get_folder(wc),
+        alias=lookup(
+            within=test_msisensor_workflow.samples,
+            query="sample == '{wildcards.sample}'",
+            cols="alias",
+        ),
     shell:
-        "( wget https://github.com/xjtu-omics/msisensor-pro/raw/refs/tags/v1.3.0/demo/data_input/{params.folder}/{params.group}_{params.alias}_sorted.bam; "
-        "  mv {params.group}_{params.alias}_sorted.bam {output.bam} "
+        "( wget https://github.com/xjtu-omics/msisensor-pro/raw/refs/tags/v1.3.0/demo/data_input/data4test/test_{params.alias}_sorted.bam; "
+        "  mv test_{params.alias}_sorted.bam {output.bam} "
         ") > {log} 2>&1"
 
 

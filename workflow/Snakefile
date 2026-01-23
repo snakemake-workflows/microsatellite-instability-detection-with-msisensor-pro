@@ -15,7 +15,7 @@ include: "rules/common.smk"
 include: "rules/utils.smk"
 include: "rules/reference.smk"
 include: "rules/msisensor_pro_panel_of_normals.smk"
-# include: "rules/msisensor_pro_tumor_matched_normal.smk"
+include: "rules/msisensor_pro_matched_normal.smk"
 include: "rules/results.smk"
 
 

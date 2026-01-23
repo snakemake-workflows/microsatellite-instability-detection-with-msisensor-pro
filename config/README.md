@@ -46,7 +46,7 @@ rule link_input_data:
     input:
         original="../../path/to/other/workflow/results/mapped_and_recalibrated/{sample}",
     output:
-        compliant="results/recal/{sample}.bam,
+        compliant="results/recal/{sample}.bam",
     log:
         "logs/link_input_data/{sample}.log",
     shell:

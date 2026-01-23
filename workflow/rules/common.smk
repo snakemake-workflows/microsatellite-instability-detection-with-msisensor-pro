@@ -11,9 +11,25 @@ samples = (
 )
 
 
-# validate sample sheet and config file
+# validate sample sheet
 validate(samples, schema="../schemas/samples.schema.yaml")
+
+# uniqueness validation for (group, alias) pairs
+duplicates = samples.groupby(["group", "alias"]).size()
+duplicate_pairs = duplicates[duplicates > 1]
+if not duplicate_pairs.empty:
+    raise ValueError(
+        "The sample sheet contains multiple samples with the same (group, "
+        "alias) pair(s). Each (group, alias) combination must map to exactly "
+        "one sample, or, put differently each alias should only appear once per "
+        "group. "
+        f"The duplicates found were:\n{duplicate_pairs}"
+    )
+
+
+# validate config file
 validate(config, schema="../schemas/config.schema.yaml")
+
 
 # define the genome variable to have informative fasta file name
 datatype_genome = "dna"
@@ -28,6 +44,7 @@ genome_name = f"genome.{datatype_genome}.{species}.{build}.{release}"
 wildcard_constraints:
     genome_version=genome_name,
     sample="|".join(samples["sample"]),
+    group="|".join(samples["group"]),
     workflow_mode="|".join(["tumor_panel_of_normals", "tumor_matched_normal"]),
 
 
@@ -72,3 +89,24 @@ def get_final_output(wildcards):
         )
 
     return final_output
+
+
+# helper functions
+
+
+def get_sample_file_for_group_and_alias_type(wildcards, alias_type, extension):
+    alias = config["aliases"].get(alias_type, "")
+    if not alias:
+        raise ValueError(
+            f"No alias for sample type '{alias_type}' specified under config['aliases']."
+        )
+    sample = lookup(
+        within=samples,
+        cols="sample",
+        query=f"group == '{wildcards.group}' & alias == '{alias}'",
+    )
+    return expand(
+        "results/recal/{sample}.{extension}",
+        sample=sample,
+        extension=extension,
+    )
