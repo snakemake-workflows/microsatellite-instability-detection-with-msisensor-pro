@@ -45,6 +45,7 @@ rule create_panel_of_normals_samples_list:
         panel_of_normals_list="results/panel_of_normals/{genome_version}.panel_of_normals.samples.list",
     log:
         "logs/panel_of_normals/{genome_version}.panel_of_normals.samples.list.log",
+    localrule: True
     conda:
         "../envs/python.yaml"
     script:

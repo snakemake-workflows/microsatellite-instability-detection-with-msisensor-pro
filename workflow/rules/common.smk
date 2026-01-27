@@ -4,11 +4,7 @@ from snakemake.utils import validate
 
 
 # read sample sheet
-samples = (
-    pd.read_csv(config["sample_sheet"], sep="\t", dtype={"sample": str})
-    .set_index("sample", drop=False)
-    .sort_index()
-)
+samples = pd.read_csv(config["sample_sheet"], sep="\t", dtype={"sample": str})
 
 
 # validate sample sheet
@@ -23,9 +19,25 @@ if not duplicate_pairs.empty:
         "alias) pair(s). Each (group, alias) combination must map to exactly "
         "one sample, or, put differently each alias should only appear once per "
         "group. "
-        f"The duplicates found were:\n{duplicate_pairs}"
+        f"The duplicates found were:\n{duplicate_pairs}\n"
     )
 
+# uniqueness validation for (sample, alias) pairs with panel_of_normals
+panel_of_normals = config["aliases"].get("panel_of_normals", "")
+if panel_of_normals:
+    pon_duplicates = (
+        samples[samples["alias"] == panel_of_normals]
+        .groupby(["sample", "alias"])
+        .size()
+    )
+    pon_duplicate_pairs = pon_duplicates[pon_duplicates > 1]
+    if not pon_duplicate_pairs.empty:
+        raise ValueError(
+            "The sample sheet contains multiple panel_of_normal samples (alias "
+            f"'{panel_of_normals}') with the same sample name. Each sample name "
+            f"with the alias '{panel_of_normals}' has to be unique. "
+            f"The duplicates found were:\n{pon_duplicate_pairs}\n"
+        )
 
 # validate config file
 validate(config, schema="../schemas/config.schema.yaml")
