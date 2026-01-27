@@ -17,7 +17,7 @@ validate(samples, schema="../schemas/samples.schema.yaml")
 # uniqueness validation for (group, alias) pairs
 duplicates = samples.groupby(["group", "alias"]).size()
 duplicate_pairs = duplicates[duplicates > 1]
-if duplicate_pairs:
+if not duplicate_pairs.empty:
     raise ValueError(
         "The sample sheet contains multiple samples with the same (group, "
         "alias) pair(s). Each (group, alias) combination must map to exactly "
@@ -35,7 +35,7 @@ if panel_of_normals:
         .size()
     )
     pon_duplicate_pairs = pon_duplicates[pon_duplicates > 1]
-    if pon_duplicate_pairs:
+    if not pon_duplicate_pairs.empty:
         raise ValueError(
             "The sample sheet contains multiple panel_of_normal samples (alias "
             f"'{panel_of_normals}') with the same sample name. Each sample name "
