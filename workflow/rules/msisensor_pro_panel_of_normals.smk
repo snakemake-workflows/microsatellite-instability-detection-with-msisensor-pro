@@ -10,9 +10,12 @@ rule msisensor_pro_pro_preprocessing_baseline:
         ms_list="resources/{genome_version}.msisensor.scan.list",
         ref="resources/{genome_version}.fasta",
     output:
-        panel_of_normals="results/panel_of_normals/details/{panel_of_normals_sample}.{genome_version}.panel_of_normals.out",
+        panel_of_normals="results/panel_of_normals/details/{panel_of_normals_sample}/{panel_of_normals_sample}.{genome_version}.panel_of_normals.out",
+        all_sites="results/panel_of_normals/details/{panel_of_normals_sample}/{panel_of_normals_sample}.{genome_version}.panel_of_normals.out_all",
+        distribution="results/panel_of_normals/details/{panel_of_normals_sample}/{panel_of_normals_sample}.{genome_version}.panel_of_normals.out_dis",
+        unstable_sites="results/panel_of_normals/details/{panel_of_normals_sample}/{panel_of_normals_sample}.{genome_version}.panel_of_normals.out_unstable",
     log:
-        "logs/panel_of_normals/details/{panel_of_normals_sample}.{genome_version}.panel_of_normals.log",
+        "logs/panel_of_normals/details/{panel_of_normals_sample}/{panel_of_normals_sample}.{genome_version}.panel_of_normals.log",
     conda:
         "../envs/msisensor_pro.yaml"
     threads: 2
@@ -28,7 +31,7 @@ rule msisensor_pro_pro_preprocessing_baseline:
 rule create_panel_of_normals_samples_list:
     input:
         panel_of_normals=expand(
-            "results/panel_of_normals/details/{panel_of_normals_sample}.{{genome_version}}.panel_of_normals.out",
+            "results/panel_of_normals/details/{panel_of_normals_sample}/{panel_of_normals_sample}.{{genome_version}}.panel_of_normals.out",
             panel_of_normals_sample=lookup(
                 within=samples,
                 query="alias == '{panel_of_normals_alias}'",
@@ -78,9 +81,12 @@ rule msisensor_pro_pro_run:
         ),
         ref="resources/{genome_version}.fasta",
     output:
-        "results/tumor_panel_of_normals/{group}/{group}.{genome_version}.msisensor-pro",
+        msi="results/tumor_panel_of_normals/{group}/{group}.{genome_version}.msisensor-pro",
+        all_sites="results/tumor_panel_of_normals/{group}/{group}.{genome_version}.msisensor-pro_all",
+        distribution="results/tumor_panel_of_normals/{group}/{group}.{genome_version}.msisensor-pro_dis",
+        unstable_sites="results/tumor_panel_of_normals/{group}/{group}.{genome_version}.msisensor-pro_unstable",
     log:
-        "results/tumor_panel_of_normals/{group}/{group}.{genome_version}.msisensor-pro.log",
+        "logs/tumor_panel_of_normals/{group}/{group}.{genome_version}.msisensor-pro.log",
     conda:
         "../envs/msisensor_pro.yaml"
     shell:
@@ -88,5 +94,5 @@ rule msisensor_pro_pro_run:
         "    -d {input.panel_of_normals} "
         "    -t {input.tumor_bam} "
         "    -g {input.ref} "
-        "    -o {output} "
+        "    -o {output.msi} "
         ") > {log} 2>&1"
