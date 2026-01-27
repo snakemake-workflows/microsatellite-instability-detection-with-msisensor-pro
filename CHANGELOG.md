@@ -1,5 +1,22 @@
 # Changelog
 
+## [1.1.1](https://github.com/snakemake-workflows/microsatellite-instability-detection-with-msisensor-pro/compare/v1.1.0...v1.1.1) (2026-01-27)
+
+
+### Bug Fixes
+
+* add validation that each sample name with a `panel_of_normals` alias is unique ([ba8af02](https://github.com/snakemake-workflows/microsatellite-instability-detection-with-msisensor-pro/commit/ba8af02db94e85a29ea3f521d53649fd2760a2e2))
+* clarify all produced outputs for the msisensor-pro pro runs ([2ecc4f4](https://github.com/snakemake-workflows/microsatellite-instability-detection-with-msisensor-pro/commit/2ecc4f47cb0a858943ad00cacaecbcda4a3e3738))
+* do not set sample column as index ([9d71149](https://github.com/snakemake-workflows/microsatellite-instability-detection-with-msisensor-pro/commit/9d711499a4a465a31cf6190b73ea8adde33def02))
+* put log files into `logs/` folder instead of `results/` folder ([90238a0](https://github.com/snakemake-workflows/microsatellite-instability-detection-with-msisensor-pro/commit/90238a0f30b49108f29ab6345f2d2867096c91ac))
+* small cleanup fixes ([204f6a6](https://github.com/snakemake-workflows/microsatellite-instability-detection-with-msisensor-pro/commit/204f6a6c38acdc7245e5fcb5e779fb82d6cf9f0b))
+* truthiness ([13b483f](https://github.com/snakemake-workflows/microsatellite-instability-detection-with-msisensor-pro/commit/13b483f462e3cf06c3153abfa97331a30a880d7d))
+
+
+### Performance Improvements
+
+* make panel_of_normals list creation a localrule, as this is an inexpensive little script ([2c985ff](https://github.com/snakemake-workflows/microsatellite-instability-detection-with-msisensor-pro/commit/2c985ff5749b009fe30c2d0b0f393aa313fd45ed))
+
 ## [1.1.0](https://github.com/snakemake-workflows/microsatellite-instability-detection-with-msisensor-pro/compare/v1.0.0...v1.1.0) (2026-01-23)
 
 
