@@ -21,6 +21,9 @@ rule msisensor_pro_msi:
         ref="resources/{genome_version}.fasta",
     output:
         msi="results/tumor_matched_normal/{group}/{group}.{genome_version}.msisensor-pro",
+        all_sites="results/tumor_matched_normal/{group}/{group}.{genome_version}.msisensor-pro_all",
+        distribution="results/tumor_matched_normal/{group}/{group}.{genome_version}.msisensor-pro_dis",
+        unstable_sites="results/tumor_matched_normal/{group}/{group}.{genome_version}.msisensor-pro_unstable",
     log:
         "logs/tumor_matched_normal/{group}/{group}.{genome_version}.msisensor-pro.log",
     conda:
@@ -28,8 +31,8 @@ rule msisensor_pro_msi:
     shell:
         "( msisensor-pro msi "
         "    -d {input.ms_list} "
-        "    -n {input.normal_bam[0]} "
-        "    -t {input.tumor_bam[0]} "
+        "    -n {input.normal_bam} "
+        "    -t {input.tumor_bam} "
         "    -g {input.ref} "
         "    -o {output.msi} "
         ") > {log} 2>&1"
