@@ -80,7 +80,7 @@ rule msisensor_pro_pro_run:
     output:
         "results/tumor_panel_of_normals/{group}/{group}.{genome_version}.msisensor-pro",
     log:
-        "results/tumor_panel_of_normals/{group}/{group}.{genome_version}.msisensor-pro.log",
+        "logs/tumor_panel_of_normals/{group}/{group}.{genome_version}.msisensor-pro.log",
     conda:
         "../envs/msisensor_pro.yaml"
     shell:

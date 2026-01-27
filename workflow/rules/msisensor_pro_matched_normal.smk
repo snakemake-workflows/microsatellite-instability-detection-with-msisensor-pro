@@ -22,7 +22,7 @@ rule msisensor_pro_msi:
     output:
         msi="results/tumor_matched_normal/{group}/{group}.{genome_version}.msisensor-pro",
     log:
-        "results/tumor_matched_normal/{group}/{group}.{genome_version}.msisensor-pro.log",
+        "logs/tumor_matched_normal/{group}/{group}.{genome_version}.msisensor-pro.log",
     conda:
         "../envs/msisensor_pro.yaml"
     shell:
